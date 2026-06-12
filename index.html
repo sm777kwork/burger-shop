@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeBurger | Сверхбыстрая доставка</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans antialiased">
+
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <span class="text-2xl font-black text-amber-500 tracking-wider">VIBE_BURGER</span>
+            <button onclick="toggleCart()" class="bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold px-4 py-2 rounded-full flex items-center gap-2 transition">
+                🛒 Корзина (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </nav>
+
+    <header class="max-w-6xl mx-auto px-4 py-12 text-center md:text-left md:flex items-center justify-between gap-8">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                ГОРЯЧИЕ БУРГЕРЫ ЗА 20 МИНУТ
+            </h1>
+            <p class="text-gray-400 text-lg mb-6">Крафтовые бургеры из фермерской говядины на чистом коде. Без лагов, без ГМО, только сочный вайб.</p>
+            <a href="#menu" class="bg-orange-500 hover:bg-orange-600 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-orange-500/20 transition inline-block">Перейти к меню</a>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <div class="w-72 h-72 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-8xl shadow-2xl shadow-amber-500/10">🍔</div>
+        </div>
+    </header>
+
+    <main id="menu" class="max-w-6xl mx-auto px-4 py-12 border-t border-gray-800">
+        <h2 class="text-3xl font-black mb-8 text-center md:text-left">АКТУАЛЬНОЕ МЕНЮ</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="text-6xl mb-4 text-center">👑</div>
+                    <h3 class="text-xl font-bold mb-2">Вайб-Бургер VIP</h3>
+                    <p class="text-gray-400 text-sm mb-4">Мраморная говядина, сыр чеддер, кастомный соус на основе нейросетей и секретные специи.</p>
+                </div>
+                <div class="flex justify-between items-center mt-4 border-t border-gray-700 pt-4">
+                    <span class="text-2xl font-black text-amber-400">450 ₽</span>
+                    <button onclick="addToCart('Вайб-Бургер VIP', 450)" class="bg-gray-700 hover:bg-amber-500 hover:text-gray-900 px-4 py-2 rounded-lg font-bold transition">🔥 В корзину</button>
+                </div>
+            </div>
+            <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="text-6xl mb-4 text-center">🌶️</div>
+                    <h3 class="text-xl font-bold mb-2">Кибер Чили</h3>
+                    <p class="text-gray-400 text-sm mb-4">Острый, как дедлайн в пятницу вечером. Халапеньо, бекон и хрустящий лук.</p>
+                </div>
+                <div class="flex justify-between items-center mt-4 border-t border-gray-700 pt-4">
+                    <span class="text-2xl font-black text-amber-400">390 ₽</span>
+                    <button onclick="addToCart('Кибер Чили', 390)" class="bg-gray-700 hover:bg-amber-500 hover:text-gray-900 px-4 py-2 rounded-lg font-bold transition">🔥 В корзину</button>
+                </div>
+            </div>
+            <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="text-6xl mb-4 text-center">🧀</div>
+                    <h3 class="text-xl font-bold mb-2">Сырный Скрипт</h3>
+                    <p class="text-gray-400 text-sm mb-4">Три слоя расплавленного сыра моцарелла и чеддер на нежной пышной булке.</p>
+                </div>
+                <div class="flex justify-between items-center mt-4 border-t border-gray-700 pt-4">
+                    <span class="text-2xl font-black text-amber-400">420 ₽</span>
+                    <button onclick="addToCart('Сырный Скрипт', 420)" class="bg-gray-700 hover:bg-amber-500 hover:text-gray-900 px-4 py-2 rounded-lg font-bold transition">🔥 В корзину</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 border-l border-gray-700 flex flex-col justify-between p-6">
+        <div>
+            <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+                <h3 class="text-xl font-black text-amber-500">ВАШ ЗАКАЗ</h3>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="cart-items" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                <p class="text-gray-500 text-center py-8">Корзина пуста. Добавьте бургер!</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 pt-4">
+            <div class="flex justify-between text-xl font-bold mb-4">
+                <span>Итого:</span>
+                <span id="cart-total" class="text-amber-400">0 ₽</span>
+            </div>
+            <button onclick="sendOrder()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition">ОФОРМИТЬ ДОСТАВКУ</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+        }
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateCart();
+        }
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">Корзина пуста. Добавьте бургер!</p>';
+                document.getElementById('cart-total').innerText = '0 ₽';
+                return;
+            }
+            container.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center bg-gray-900 p-3 rounded-xl border border-gray-700">
+                    <div>
+                        <p class="font-bold text-sm">${item.name}</p>
+                        <p class="text-amber-400 text-xs">${item.price} ₽</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-400 font-bold px-2">Удалить</button>
+                </div>
+            `).join('');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = total + ' ₽';
+        }
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+        function sendOrder() {
+            if(cart.length === 0) return alert('Добавьте товары в корзину!');
+            alert(`Заказ на сумму ${cart.reduce((sum, item) => sum + item.price, 0)} ₽ успешно сформирован и сымитирован к отправке в Telegram владельцу кафе!`);
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+    </script>
+</body>
+</html>
